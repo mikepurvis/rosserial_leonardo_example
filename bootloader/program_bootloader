@@ -1,0 +1,8 @@
+#!/bin/sh
+AVRDUDE="sudo /usr/share/arduino/hardware/tools/avrdude"
+AVRDUDE_CONFIG="/usr/share/arduino/hardware/tools/avrdude.conf"
+AVRDUDE_FLAGS="-C ${AVRDUDE_CONFIG} -p m32u4 -P usb -c avrispmkii"
+$AVRDUDE $AVRDUDE_FLAGS -e
+$AVRDUDE $AVRDUDE_FLAGS -U lfuse:w:0xFC:m -U hfuse:w:0xD0:m -U efuse:w:0xC3:m 
+$AVRDUDE $AVRDUDE_FLAGS -B 1 -U flash:w:$(rospack find kingfisher_avr)/bootloader/Caterina-Leonardo.hex 
+$AVRDUDE $AVRDUDE_FLAGS -U lock:w:0x2F:m
